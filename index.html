@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Talks Today</title>
+    <style>
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #6c757d;
+            --background-color: #f8f9fa;
+            --font-color: #212529;
+            --card-bg: #ffffff;
+            --card-border: #dee2e6;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--font-color);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        #search-input {
+            width: 80%;
+            max-width: 400px;
+            padding: 12px;
+            border: 1px solid var(--card-border);
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #search-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .schedule-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .schedule-item.hidden {
+            display: none;
+        }
+
+        .schedule-item.break {
+            background-color: #e9ecef;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .schedule-item:hover:not(.break) {
+            transform: translateY(-5px);
+        }
+
+        .time-slot {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .talk-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .speakers {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        .description {
+            line-height: 1.6;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .category-tag {
+            background-color: #e2eefd;
+            color: var(--primary-color);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--card-border);
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Tech Talks Today</h1>
+            <p>A one-day event dedicated to the future of technology.</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search by category (e.g., AI, JavaScript)...">
+        </div>
+
+        <main id="schedule-container">
+            <!-- Schedule will be dynamically generated here -->
+        </main>
+        
+        <footer>
+            <p>&copy; 2026 Tech Talks Today. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const talks = [
+                {
+                    title: "The Evolution of Modern JavaScript",
+                    speakers: ["Sarah Chen"],
+                    category: ["JavaScript", "Frontend", "WebDev"],
+                    duration: 60,
+                    description: "Exploring the new features in ES2025 and how they are shaping the future of web development, from performance improvements to new syntax."
+                },
+                {
+                    title: "Ethical AI: Bias and Fairness in Machine Learning",
+                    speakers: ["David Lee", "Maria Garcia"],
+                    category: ["AI", "Ethics", "Data Science"],
+                    duration: 60,
+                    description: "A critical look at how to identify and mitigate bias in AI models to create fairer and more transparent systems for everyone."
+                },
+                {
+                    title: "Building Scalable APIs with GraphQL",
+                    speakers: ["Alex Johnson"],
+                    category: ["Backend", "API", "GraphQL"],
+                    duration: 60,
+                    description: "Learn the fundamentals of GraphQL and how to build a flexible and efficient API that outperforms traditional RESTful services."
+                },
+                {
+                    title: "The Rise of WebAssembly",
+                    speakers: ["Emily White"],
+                    category: ["WebAssembly", "Performance", "WebDev"],
+                    duration: 60,
+                    description: "Discover how WebAssembly is enabling near-native performance in web applications and what it means for the future of JavaScript."
+                },
+                {
+                    title: "Advanced State Management in React",
+                    speakers: ["Ben Carter", "Olivia Rodriguez"],
+                    category: ["React", "JavaScript", "Frontend"],
+                    duration: 60,
+                    description: "A deep dive into modern state management libraries and patterns in React, moving beyond useState to handle complex application data."
+                },
+                {
+                    title: "Generative AI and Creative Code",
+                    speakers: ["Kenji Tanaka"],
+                    category: ["AI", "Creative Coding", "JavaScript"],
+                    duration: 60,
+                    description: "An inspiring session on using generative AI models to create art, music, and interactive experiences with code."
+                }
+            ];
+
+            const scheduleContainer = document.getElementById('schedule-container');
+            const searchInput = document.getElementById('search-input');
+
+            const formatTime = (date) => {
+                return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            };
+            
+            const generateSchedule = () => {
+                scheduleContainer.innerHTML = ''; // Clear existing schedule
+                let currentTime = new Date();
+                currentTime.setHours(10, 0, 0, 0); // Event starts at 10:00 AM
+
+                talks.forEach((talk, index) => {
+                    // Insert Lunch Break after the 3rd talk
+                    if (index === 3) {
+                        const lunchStartTime = new Date(currentTime);
+                        const lunchEndTime = new Date(lunchStartTime.getTime() + 60 * 60 * 1000);
+                        const lunchDiv = document.createElement('div');
+                        lunchDiv.className = 'schedule-item break';
+                        lunchDiv.innerHTML = `
+                            <div class="time-slot">${formatTime(lunchStartTime)} - ${formatTime(lunchEndTime)}</div>
+                            <div>Lunch Break</div>
+                        `;
+                        scheduleContainer.appendChild(lunchDiv);
+                        currentTime = lunchEndTime;
+                    }
+
+                    // Add transition break before the talk (except the first one)
+                    if (index > 0) {
+                       currentTime = new Date(currentTime.getTime() + 10 * 60 * 1000);
+                    }
+                    
+                    const talkStartTime = new Date(currentTime);
+                    const talkEndTime = new Date(talkStartTime.getTime() + talk.duration * 60 * 1000);
+                    
+                    const talkDiv = document.createElement('div');
+                    talkDiv.className = 'schedule-item talk';
+                    talkDiv.dataset.categories = talk.category.join(',').toLowerCase();
+
+                    talkDiv.innerHTML = `
+                        <div class="time-slot">${formatTime(talkStartTime)} - ${formatTime(talkEndTime)}</div>
+                        <h3 class="talk-title">${talk.title}</h3>
+                        <div class="speakers">By: ${talk.speakers.join(' & ')}</div>
+                        <div class="description">${talk.description}</div>
+                        <div class="categories">
+                            ${talk.category.map(cat => `<span class="category-tag">${cat}</span>`).join('')}
+                        </div>
+                    `;
+                    scheduleContainer.appendChild(talkDiv);
+
+                    currentTime = talkEndTime;
+                });
+            };
+            
+            const filterTalks = () => {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const allTalks = document.querySelectorAll('.schedule-item.talk');
+
+                allTalks.forEach(talkElement => {
+                    const categories = talkElement.dataset.categories;
+                    if (categories.includes(searchTerm)) {
+                        talkElement.classList.remove('hidden');
+                    } else {
+                        talkElement.classList.add('hidden');
+                    }
+                });
+            };
+
+            searchInput.addEventListener('input', filterTalks);
+            
+            // Initial generation of the schedule
+            generateSchedule();
+        });
+    </script>
+</body>
+</html>
